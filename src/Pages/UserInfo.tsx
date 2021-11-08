@@ -19,7 +19,7 @@ const UserInfo: React.FC = () => {
 	return (
 		<div className="inner_forms">
 			<UserCredentials isLoading={ isLoading } locations={ locations }/>
-			<ImageShare isLoading={ isLoading }/>
+			<ImageShare isLoading={ isLoading } images={images}/>
 			<div className="form-group bottom_buttin">
 				<button type="submit" className="btn btn-primary">Get my sample</button>
 			</div>
