@@ -1,3 +1,10 @@
+.server-progress {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
 .server-progress p {
     text-align: center;
     display: flex;
