@@ -6,7 +6,7 @@ import classes from './ServerProgress.module.css';
 
 const ServerProgress: React.FC = () => {
 	const serverProgress = useSelector((state: RootState) => state[SERVER_PROGRESS_SLICE]);
-
+	console.log({serverProgress});
 	if (!serverProgress) {
 		return (<span/>);
 	}
@@ -26,4 +26,4 @@ const ServerProgress: React.FC = () => {
 	);
 };
 
-export default ServerProgress;
+export default React.memo(ServerProgress);

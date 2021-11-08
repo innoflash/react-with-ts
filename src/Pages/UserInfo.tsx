@@ -4,7 +4,10 @@ import UserCredentials from '../components/UserInfo/UserCredentials';
 import useHttp from '../hooks/useHttp';
 
 const UserInfo: React.FC = () => {
-	const { isLoading, launchRequest } = useHttp({ showServerProgress: true });
+	const { isLoading, launchRequest } = useHttp({
+		showServerProgress: true,
+		successMessage: 'Initial data loaded successfully!'
+	});
 
 	useEffect(() => launchRequest(['registration/images', 'registration/locations']), []);
 

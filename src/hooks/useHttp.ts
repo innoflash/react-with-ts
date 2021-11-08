@@ -6,7 +6,8 @@ import { serverProgressSliceActions, ServerProgressType } from '../store/server-
 
 export type HttpUseModel = {
 	showServerProgress?: boolean,
-	opMessage?: string
+	opMessage?: string,
+	successMessage?: string;
 }
 
 export interface HttpUseHookResult<T> {
@@ -25,16 +26,17 @@ function useHttp<T>(config: HttpUseModel): HttpUseHookResult<T> {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [data, setData] = useState<T>();
 
-	if (config.showServerProgress) {
-		setTimeout(() => dispatch(serverProgressSliceActions.showProgress({
-			type: ServerProgressType.PENDING,
-			message: config.opMessage || 'Please wait'
-		})));
-	}
-
 	const launchRequest = (url: string | string[], axiosRequestConfig: AxiosRequestConfig = {
 		method: 'get'
 	}) => {
+		//show user in pending status.
+		if (config.showServerProgress) {
+			setTimeout(() => dispatch(serverProgressSliceActions.showProgress({
+				type: ServerProgressType.PENDING,
+				message: config.opMessage || 'Please wait'
+			})));
+		}
+
 		//start the loading.
 		setIsLoading(true);
 
@@ -56,9 +58,31 @@ function useHttp<T>(config: HttpUseModel): HttpUseHookResult<T> {
 					setData(res[0].data);
 				}
 				setData(res.map(item => item.data) as unknown as T);
+
+				// update user if show progress.
+				if (config.showServerProgress) {
+					console.log('this should be called');
+					dispatch(serverProgressSliceActions.showProgress({
+						type: ServerProgressType.SUCCESS,
+						message: config.successMessage || 'Query successful!'
+					}));
+				}
 			})
-			.catch(error => console.error(error))
-			.finally(() => setIsLoading(false));
+			.catch(error => {
+				if (config.showServerProgress) {
+					dispatch(serverProgressSliceActions.showProgress({
+						type: ServerProgressType.SUCCESS,
+						message: error.message
+					}));
+				}
+			})
+			.finally(() => {
+				setIsLoading(false);
+
+				if (config.showServerProgress) {
+					setTimeout(() => dispatch(serverProgressSliceActions.hideProgress()), 2500);
+				}
+			});
 	};
 
 	return {
