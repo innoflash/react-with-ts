@@ -35,6 +35,13 @@ const UserCredentials: React.FC = () => {
 					)) }
 				</select>
 			</div>
+			<div className="form-group inline_boxs">
+				<label htmlFor="sel1">Opt in</label>
+				<select className="form-control">
+					<option>Yes</option>
+					<option>No</option>
+				</select>
+			</div>
 			<ItemLoader>
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
