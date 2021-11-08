@@ -38,8 +38,17 @@ const UserCredentials: React.FC = () => {
 			<div className="form-group inline_boxs">
 				<label htmlFor="sel1">Opt in</label>
 				<select className="form-control">
+					<option value="" selected disabled>Choose opt in</option>
 					<option>Yes</option>
 					<option>No</option>
+				</select>
+			</div>
+			<div className="form-group">
+				<label htmlFor="sel1">Preferred Communication</label>
+				<select className="form-control">
+					<option value="" selected disabled>Choose method</option>
+					<option>Email</option>
+					<option>SMS</option>
 				</select>
 			</div>
 			<ItemLoader>
