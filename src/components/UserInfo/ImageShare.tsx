@@ -1,9 +1,11 @@
 import React from 'react';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
-const ImageShare: React.FC = () => {
+const ImageShare: React.FC<{
+	isLoading: boolean
+}> = ({isLoading}) => {
 	return (
-		<ItemLoader>
+		<ItemLoader isLoading={isLoading}>
 			<div className="sample_produss">
 				<div className="products_inner">
 					<div className="pro_imgs">

@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react';
 import classes from './ItemLoader.module.css';
 
-const ItemLoader: React.FC = ({ children }) => {
+const ItemLoader: React.FC<{
+	isLoading: boolean
+}> = ({ children, isLoading }) => {
 	return (
 		<Fragment>
-			<div className={classes.centered}>
+			{ isLoading && <div className={ classes.centered }>
 				<div className={ classes['lds-hourglass'] }/>
-			</div>
-			{ children }
+			</div> }
+
+			{ !isLoading && children }
 		</Fragment>
 	);
 };

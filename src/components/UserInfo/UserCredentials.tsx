@@ -4,7 +4,9 @@ import phoneImage from '../../assets/img/phone_number.png';
 import userNameImage from '../../assets/img/username.png';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
-const UserCredentials: React.FC = () => {
+const UserCredentials: React.FC<{
+	isLoading: boolean
+}> = ({isLoading}) => {
 	const ages = Array(100)
 		.fill(0)
 		.map((_, i) => i + 1)
@@ -51,7 +53,7 @@ const UserCredentials: React.FC = () => {
 					<option>SMS</option>
 				</select>
 			</div>
-			<ItemLoader>
+			<ItemLoader isLoading={isLoading}>
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
 					<select className="form-control">
