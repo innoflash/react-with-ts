@@ -1,24 +1,34 @@
-body{
-	color: #222;
+body {
+    color: #222;
+    background: url('../img/recoffy.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding-top: 75%;
 }
+
 @font-face {
-  font-family: Calibri;
-  src: url(../fonts/Calibri.ttf);
+    font-family: Calibri;
+    src: url(../fonts/Calibri.ttf);
 }
+
 @font-face {
-  font-family: MyriadPro-Bold;
-  src: url(../fonts/MyriadPro-Bold.otf);
+    font-family: MyriadPro-Bold;
+    src: url(../fonts/MyriadPro-Bold.otf);
 }
+
 @font-face {
-  font-family: NescafeSans-Bold;
-  src: url(../fonts/NescafeSans-Bold.otf);
+    font-family: NescafeSans-Bold;
+    src: url(../fonts/NescafeSans-Bold.otf);
 }
-.top_title{
-	color: #fff;
-	text-align: center;
-	font-family: NescafeSans-Bold;
-	font-size: 18px;
+
+.top_title {
+    color: #fff;
+    text-align: center;
+    font-family: NescafeSans-Bold;
+    font-size: 18px;
 }
+
 .inner_forms {
     background: #fff;
     padding: 35px 20px;
@@ -26,42 +36,51 @@ body{
     margin-top: 15px;
     margin-bottom: 40px;
 }
+
 .in_desg {
     display: flex;
     align-items: center;
     position: relative;
 }
+
 .in_desg input {
     padding: 15px 15px 15px 45px;
     background: #F0F0F0;
     border-color: #F0F0F0;
     font-family: Calibri;
 }
+
 .name_f {
     position: absolute;
     left: 2px;
 }
+
 .emails {
     position: absolute;
     left: 2px;
 }
+
 .phones {
     position: absolute;
     left: 2px;
 }
+
 .inline_boxs label {
     width: 105px;
     font-family: Calibri;
 }
+
 .inline_boxs {
     display: flex;
     align-items: flex-end;
 }
+
 .inline_boxs select {
     border-color: #a3a6a9;
     border: 2px solid;
     font-family: Calibri;
 }
+
 .middle_title {
     font-size: 13px;
     text-align: center;
@@ -70,17 +89,21 @@ body{
     font-weight: 600;
     font-family: MyriadPro-Bold;
 }
+
 .products_inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 .pro_imgs {
     width: 60%;
 }
+
 .pro_imgs img {
     width: 100%;
 }
+
 button.btn {
     background: #86461F;
     border-color: #86461F;
@@ -88,20 +111,24 @@ button.btn {
     padding: 8px 29px;
     font-size: 16px;
 }
+
 .pains {
     padding-bottom: 10px;
 }
+
 .bottom_buttin button {
     width: 100%;
     padding: 10px;
     font-size: 20px;
     font-family: Calibri;
 }
+
 .bottom_buttin {
     margin-top: 10%;
     width: 100%;
     font-family: Calibri;
 }
+
 .terms_text p {
     margin: 0;
     font-size: 10px;
@@ -109,19 +136,24 @@ button.btn {
     color: #CCCCCC;
     font-family: Calibri;
 }
-.pera_01 h4, .pera_02 h4, .pera_01 p, .pera_02 p{
-	font-family: MyriadPro-Bold;
-	color: #000;
+
+.pera_01 h4, .pera_02 h4, .pera_01 p, .pera_02 p {
+    font-family: MyriadPro-Bold;
+    color: #000;
 }
+
 .pera_02 p {
     font-size: 15px;
 }
+
 .pera_01 p {
     font-size: 15px;
 }
+
 .qr_codes img {
     width: 100%;
 }
+
 .sample_produss {
     margin-bottom: 20px;
 }

@@ -1,17 +1,20 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Layout from './components/UI/Layout';
 import NotFound from './Pages/NotFound';
 import ServerResponse from './Pages/ServerResponse';
 import UserInfo from './Pages/UserInfo';
 
 const App: React.FC = () => {
 	return (
-		<Routes>
-			<Route path="/" element={ <UserInfo/> }/>
-			<Route path="/server-response" element={ <ServerResponse/> }/>
-			<Route path="*" element={ <NotFound/> }/>
-		</Routes>
+		<Layout>
+			<Routes>
+				<Route path="/" element={ <UserInfo/> }/>
+				<Route path="/server-response" element={ <ServerResponse/> }/>
+				<Route path="*" element={ <NotFound/> }/>
+			</Routes>
+		</Layout>
 	);
 };
 
