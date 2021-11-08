@@ -7,7 +7,8 @@ const UserInfo: React.FC = () => {
 	const { isLoading, launchRequest } = useHttp({
 		showServerProgress: true,
 		successMessage: 'Initial data loaded successfully!',
-		onError: error => console.log('we encountered an error')
+		onError: error => console.log('we encountered an error'),
+		onSuccess: data => console.log(data),
 	});
 
 	useEffect(() => launchRequest(['registration/images', 'registration/locations']), []);

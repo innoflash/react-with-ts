@@ -4,11 +4,12 @@ import { useDispatch } from 'react-redux';
 import env from '../environments/environement.dev';
 import { serverProgressSliceActions, ServerProgressType } from '../store/server-progress.slice';
 
-export type HttpUseModel = {
+export type HttpUseModel<T> = {
 	showServerProgress?: boolean,
 	opMessage?: string,
 	successMessage?: string;
-	onError?: (error: any) => void
+	onError?: (error: any) => void,
+	onSuccess?: (data: T) => void
 }
 
 export interface HttpUseHookResult<T> {
@@ -22,7 +23,7 @@ const api = axios.create({
 	timeout: 3500
 });
 
-function useHttp<T>(config: HttpUseModel): HttpUseHookResult<T> {
+function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 	const dispatch = useDispatch();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [data, setData] = useState<T>();
@@ -67,6 +68,11 @@ function useHttp<T>(config: HttpUseModel): HttpUseHookResult<T> {
 						type: ServerProgressType.SUCCESS,
 						message: config.successMessage || 'Query successful!'
 					}));
+				}
+
+				//execute user success callback.
+				if (config.onSuccess) {
+					config.onSuccess(data as T);
 				}
 			})
 			.catch(error => {
