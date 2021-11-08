@@ -8,6 +8,7 @@ export type HttpUseModel = {
 	showServerProgress?: boolean,
 	opMessage?: string,
 	successMessage?: string;
+	onError?: (error: any) => void
 }
 
 export interface HttpUseHookResult<T> {
@@ -74,6 +75,11 @@ function useHttp<T>(config: HttpUseModel): HttpUseHookResult<T> {
 						type: ServerProgressType.SUCCESS,
 						message: error.message
 					}));
+				}
+
+				//execute custom error callback.
+				if (config.onError) {
+					config.onError(error);
 				}
 			})
 			.finally(() => {

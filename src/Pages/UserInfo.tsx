@@ -6,7 +6,8 @@ import useHttp from '../hooks/useHttp';
 const UserInfo: React.FC = () => {
 	const { isLoading, launchRequest } = useHttp({
 		showServerProgress: true,
-		successMessage: 'Initial data loaded successfully!'
+		successMessage: 'Initial data loaded successfully!',
+		onError: error => console.log('we encountered an error')
 	});
 
 	useEffect(() => launchRequest(['registration/images', 'registration/locations']), []);
