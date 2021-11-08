@@ -1,5 +1,7 @@
 body {
     color: #222;
+}
+.app-body {
     background: url('../img/recoffy.jpeg');
     background-size: cover;
     background-repeat: no-repeat;

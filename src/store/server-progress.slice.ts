@@ -7,7 +7,7 @@ const serverProgressSlice = createSlice({
 	initialState: <ServerProgressSliceModel | null>null,
 	reducers: {
 		showProgress: (state, payload) => payload as unknown as ServerProgressSliceModel,
-		hideProgress: (__, _) => null
+		hideProgress: () => null
 	}
 });
 export default serverProgressSlice;
@@ -20,7 +20,6 @@ export enum ServerProgressType {
 }
 
 export interface ServerProgressSliceModel {
-	title: string;
 	message: string;
 	type: ServerProgressType;
 }

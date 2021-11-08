@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../assets/css/bootstrap.min.css';
 import '../../assets/css/style.css';
 import Header from './Header';
+import ServerProgress from './ServerProgress/ServerProgress';
 
 const Layout: React.FC = (props) => {
 	return (
-		<div className="container">
-			<Header/>
-			<div className="row">
-				<div className="col-sm-12 col-md-12 col-lg-12">
-					{ props.children }
+		<Fragment>
+			<ServerProgress/>
+			<div className="container app-body">
+				<Header/>
+				<div className="row">
+					<div className="col-sm-12 col-md-12 col-lg-12">
+						{ props.children }
+					</div>
 				</div>
 			</div>
-		</div>
+		</Fragment>
 	);
 };
 
