@@ -1,11 +1,12 @@
 import React from 'react';
 import '../../assets/css/bootstrap.min.css';
 import '../../assets/css/style.css';
+import Header from './Header';
 
 const Layout: React.FC = (props) => {
 	return (
 		<div>
-			<p>This is working</p>
+			<Header/>
 			{ props.children }
 		</div>
 	);
