@@ -5,7 +5,7 @@ import Header from './Header';
 
 const Layout: React.FC = (props) => {
 	return (
-		<div>
+		<div className="container">
 			<Header/>
 			<div className="row">
 				<div className="col-sm-12 col-md-12 col-lg-12">

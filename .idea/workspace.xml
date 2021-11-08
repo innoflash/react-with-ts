@@ -5,6 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="219da984-f969-4260-8804-997f9acb800c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Loaders/ItemLoader/ItemLoader.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Loaders/ItemLoader/ItemLoader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/UserInfo/UserCredentials.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/UserInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/UserInfo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/UI/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UI/Layout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +23,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -38,6 +45,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/assets" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -52,6 +60,9 @@
       <recent name="C:\Users\Admin\Documents\Work Admin\Learn\React\ricoffy\src\assets" />
       <recent name="C:\Users\Admin\Documents\Work Admin\Learn\React\ricoffy\src" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Documents\Work Admin\Learn\React\ricoffy\src\components\Loaders\ItemLoader" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -61,7 +72,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636363318133</updated>
-      <workItem from="1636363327499" duration="3413000" />
+      <workItem from="1636363327499" duration="6175000" />
     </task>
     <servers />
   </component>

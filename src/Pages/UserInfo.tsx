@@ -1,8 +1,11 @@
 import React from 'react';
+import UserCredentials from '../components/UserInfo/UserCredentials';
 
 const UserInfo: React.FC = () => {
 	return (
-		<p>This is a user info page</p>
+		<div className="inner_forms">
+			<UserCredentials/>
+		</div>
 	);
 };
 
