@@ -2,16 +2,24 @@ import React from 'react';
 import emailImage from '../../assets/img/email.png';
 import phoneImage from '../../assets/img/phone_number.png';
 import userNameImage from '../../assets/img/username.png';
+import { getArrayUniqueValues } from '../../helper';
+import { LocationModel } from '../../models/LocationModel';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
 const UserCredentials: React.FC<{
-	isLoading: boolean
-}> = ({isLoading}) => {
+	isLoading: boolean;
+	locations: LocationModel[];
+}> = ({ isLoading, locations }) => {
 	const ages = Array(100)
 		.fill(0)
 		.map((_, i) => i + 1)
 		.filter(num => num >= 18)
 		.map(num => `${ num } years`);
+
+	const provinces = locations.map(location => location.province)
+		.filter(getArrayUniqueValues);
+
+	const getLocations = (province: string) => locations.filter(location => location.province === province);
 
 	return (
 		<form>
@@ -53,14 +61,19 @@ const UserCredentials: React.FC<{
 					<option>SMS</option>
 				</select>
 			</div>
-			<ItemLoader isLoading={isLoading}>
+			<ItemLoader isLoading={ isLoading }>
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
 					<select className="form-control">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
+						{ provinces.map(province => (
+							<optgroup label={ province } key={ province }>
+								{ getLocations(province).map(location => (
+									<option key={ location.id } value={ location.id }>
+										{ location.name }
+									</option>
+								)) }
+							</optgroup>
+						)) }
 					</select>
 				</div>
 			</ItemLoader>

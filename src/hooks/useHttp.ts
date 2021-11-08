@@ -63,7 +63,6 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 
 				// update user if show progress.
 				if (config.showServerProgress) {
-					console.log('this should be called');
 					dispatch(serverProgressSliceActions.showProgress({
 						type: ServerProgressType.SUCCESS,
 						message: config.successMessage || 'Query successful!'
