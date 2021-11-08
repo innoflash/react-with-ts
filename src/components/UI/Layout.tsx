@@ -7,7 +7,11 @@ const Layout: React.FC = (props) => {
 	return (
 		<div>
 			<Header/>
-			{ props.children }
+			<div className="row">
+				<div className="col-sm-12 col-md-12 col-lg-12">
+					{ props.children }
+				</div>
+			</div>
 		</div>
 	);
 };
