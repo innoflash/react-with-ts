@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ImageShare from '../components/UserInfo/ImageShare';
 import UserCredentials from '../components/UserInfo/UserCredentials';
+import useHttp from '../hooks/useHttp';
 
 const UserInfo: React.FC = () => {
+	const { isLoading, launchRequest } = useHttp({ showServerProgress: true });
+
+	useEffect(() => launchRequest(['registration/images', 'registration/locations']), []);
+
 	return (
 		<div className="inner_forms">
 			<UserCredentials/>

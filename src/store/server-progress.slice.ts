@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const SERVER_PROGRESS_SLICE = 'server-progress-slice';
 
@@ -6,7 +6,7 @@ const serverProgressSlice = createSlice({
 	name: SERVER_PROGRESS_SLICE,
 	initialState: <ServerProgressSliceModel | null>null,
 	reducers: {
-		showProgress: (state, payload) => payload as unknown as ServerProgressSliceModel,
+		showProgress: (state, action: PayloadAction<ServerProgressSliceModel>) => action.payload,
 		hideProgress: () => null
 	}
 });
