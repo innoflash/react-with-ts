@@ -10,7 +10,9 @@ const Dialog: React.FC = () => {
 	//const dialogConfig = useSelector((state: RootState) => state[DIALOG_SLICE]);
 	const dialogConfig: DialogConfigModel = {
 		type: DialogType.CONFIRM,
-		message: 'This is my message here'
+		message: 'This is my message here',
+		onDialogClose: () => console.log('this is clossed'),
+		onDialogOkay: () => console.log('this is okayed'),
 	};
 
 	if (!dialogConfig)
@@ -53,7 +55,21 @@ const Dialog: React.FC = () => {
 	//set footer content aligning.
 	const getFooterStyles = () => `d-flex flex-row justify-content-${ showCancelButton() ? 'between' : 'center' }`;
 
-	const closeDialog = () => dispatch(dialogActions.hideDialog());
+	//closes the dialog.
+	const dialogCloseHandler = () => {
+		dispatch(dialogActions.hideDialog());
+		if (dialogConfig.onDialogClose) {
+			dialogConfig.onDialogClose();
+		}
+	};
+
+	//handle okay button click.
+	const dialogOkayHandler = () => {
+		dispatch(dialogActions.hideDialog());
+		if (dialogConfig.onDialogOkay) {
+			dialogConfig.onDialogOkay();
+		}
+	};
 
 	return <Backdrop>
 		<Card>
@@ -65,10 +81,11 @@ const Dialog: React.FC = () => {
 			</h6>
 			{ !!dialogConfig.message && <p className="text-center">{ dialogConfig.message }</p> }
 			<div className={ getFooterStyles() }>
-				{ showCancelButton() && <a href="#" className="btn btn-danger-outline btn-xs" onClick={ closeDialog }>
+				{ showCancelButton() &&
+				<a href="#" className="btn btn-danger-outline btn-xs" onClick={ dialogCloseHandler }>
 					{ dialogConfig.cancelButtonText || 'Close' }
 				</a> }
-				<a href="#" className={ getButtonColor() }>
+				<a href="#" className={ getButtonColor() } onClick={ dialogOkayHandler }>
 					{ dialogConfig.okButtonText || 'Ok!' }
 				</a>
 			</div>
