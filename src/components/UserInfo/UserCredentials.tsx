@@ -54,7 +54,13 @@ const UserCredentials: React.FC<{
 		hasError: ageHasError
 	} = useInput(val => !!val.trim().length);
 
-	console.log({ age, ageHasError, isAgeValid });
+	const {
+		value: optIn,
+		onChange: onOptInChangeHandler,
+		valid: isOptInValid,
+		onBlur: onOptInBlurHandler,
+		hasError: optInHasError
+	} = useInput(val => ['Yes', 'No'].includes(val));
 
 	return (
 		<form>
@@ -109,10 +115,15 @@ const UserCredentials: React.FC<{
 					)) }
 				</select>
 			</div>
+
+			{ optInHasError && <small className="text-danger">The opt-in is invalid, select the right one</small> }
 			<div className="form-group inline_boxs">
 				<label htmlFor="sel1">Opt in</label>
-				<select className="form-control">
-					<option defaultValue="" selected disabled>Choose opt in</option>
+				<select className="form-control"
+				        value={ optIn }
+				        onChange={ onOptInChangeHandler }
+				        onBlur={ onOptInBlurHandler }>
+					<option value="" disabled>Choose opt in</option>
 					<option>Yes</option>
 					<option>No</option>
 				</select>
