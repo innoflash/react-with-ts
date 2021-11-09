@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import emailImage from '../../assets/img/email.png';
 import phoneImage from '../../assets/img/phone_number.png';
 import userNameImage from '../../assets/img/username.png';
@@ -7,19 +7,20 @@ import useInput from '../../hooks/useInput';
 import { LocationModel } from '../../models/LocationModel';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
-const UserCredentials: React.FC<{
+// eslint-disable-next-line react/display-name
+const UserCredentials = forwardRef<HTMLFormElement, {
 	isLoading: boolean;
 	locations: LocationModel[];
-}> = ({ isLoading, locations }) => {
+}>((x, ref) => {
 	const ages = Array(100)
 		.fill(0)
 		.map((_, i) => i + 1)
 		.filter(num => num >= 18)
 		.map(num => `${ num } years`);
 
-	const provinces = locations.map(location => location.province).filter(getArrayUniqueValues);
+	const provinces = x.locations.map(location => location.province).filter(getArrayUniqueValues);
 
-	const getLocations = (province: string) => locations.filter(location => location.province === province);
+	const getLocations = (province: string) => x.locations.filter(location => location.province === province);
 
 	// configure inputs.
 	const nameInput = useInput(val => !!val.trim().length);
@@ -30,8 +31,14 @@ const UserCredentials: React.FC<{
 	const communicationInput = useInput(val => ['Email', 'SMS'].includes(val));
 	const locationInput = useInput(val => ['Email', 'SMS'].includes(val));
 
+	// handle form submission.
+	const formSubmissionHandler = (event: React.FormEvent) => {
+		event.preventDefault();
+
+	};
+
 	return (
-		<form>
+		<form onSubmit={formSubmissionHandler} ref={ref} >
 			{ nameInput.hasError && <small className="text-danger">The name is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ userNameImage } className="name_f"/>
@@ -112,7 +119,7 @@ const UserCredentials: React.FC<{
 				</select>
 			</div>
 
-			<ItemLoader isLoading={ isLoading }>
+			<ItemLoader isLoading={ x.isLoading }>
 				{ locationInput.hasError &&
 				<small className="text-danger">The location is invalid, select the right one</small> }
 				<div className="form-group inline_boxs">
@@ -141,6 +148,6 @@ const UserCredentials: React.FC<{
 			</div>
 		</form>
 	);
-};
+});
 
 export default UserCredentials;

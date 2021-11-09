@@ -28,13 +28,12 @@ const initialState: InputState = {
 };
 
 const inputReducer = (state: InputState, action: ActionType): InputState => {
-	console.log({ state, action });
 	const actionsMap = {
 		[reduceTypes.VALUE_CHANGE]: () => ({ value: action.value, touched: true }),
 		[reduceTypes.BLUR]: () => ({ touched: true })
 	};
 
-	return { ...state, ...actionsMap[action.type]() || {} };
+	return { ...state, ...actionsMap[action.type]() || initialState };
 };
 
 const useInput = (validateFn: (value: string) => boolean): InputUseResult => {
