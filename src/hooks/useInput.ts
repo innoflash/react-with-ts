@@ -1,18 +1,18 @@
 import React, { useReducer } from 'react';
 
 export interface InputState {
-	value: string | number;
+	value: string;
 	touched: boolean;
 }
 
 export type ActionType = {
 	type: string,
-	[key: string]: string | number | null
+	[key: string]: string | null
 }
 
 export type InputUseResult = InputState & {
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-	onBlur: (event?: React.MouseEvent) => void,
+	onBlur: () => void,
 	hasError: boolean,
 	valid: boolean
 };
@@ -28,6 +28,7 @@ const initialState: InputState = {
 };
 
 const inputReducer = (state: InputState, action: ActionType): InputState => {
+	console.log({ state, action });
 	const actionsMap = {
 		[reduceTypes.VALUE_CHANGE]: () => ({ value: action.value, touched: true }),
 		[reduceTypes.BLUR]: () => ({ touched: true })
@@ -36,7 +37,7 @@ const inputReducer = (state: InputState, action: ActionType): InputState => {
 	return { ...state, ...actionsMap[action.type]() || {} };
 };
 
-const useInput = (validate: (value: string | number) => boolean): InputUseResult => {
+const useInput = (validate: (value: string) => boolean): InputUseResult => {
 	const [inputState, dispatchInputState] = useReducer(inputReducer, initialState);
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => dispatchInputState({

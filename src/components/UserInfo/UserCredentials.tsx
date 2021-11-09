@@ -3,6 +3,7 @@ import emailImage from '../../assets/img/email.png';
 import phoneImage from '../../assets/img/phone_number.png';
 import userNameImage from '../../assets/img/username.png';
 import { getArrayUniqueValues } from '../../helper';
+import useInput from '../../hooks/useInput';
 import { LocationModel } from '../../models/LocationModel';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
@@ -21,16 +22,33 @@ const UserCredentials: React.FC<{
 
 	const getLocations = (province: string) => locations.filter(location => location.province === province);
 
+	const {
+		value: name,
+		onChange: onNameChangeHandler,
+		onBlur: onNameBlurHandler,
+		valid: isNameValid,
+		hasError: nameHasError
+	} = useInput(val => !!val.trim().length);
+
 	return (
 		<form>
+			{ nameHasError && <small className="text-danger">The name is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ userNameImage } className="name_f"/>
-				<input type="text" className="form-control" placeholder="Full Name" id="full_name"/>
+				<input type="text"
+				       className="form-control"
+				       placeholder="Full Name"
+				       id="full_name"
+				       value={ name }
+				       onChange={ onNameChangeHandler }
+				       onBlur={ onNameBlurHandler }/>
 			</div>
+			<small className="text-danger">The email is invalid</small>
 			<div className="form-group in_desg">
 				<img src={ emailImage } className="emails"/>
 				<input type="email" className="form-control" placeholder="Email" id="email"/>
 			</div>
+			<small className="text-danger">The phone is invalid</small>
 			<div className="form-group in_desg">
 				<img src={ phoneImage } className="phones"/>
 				<input type="text" className="form-control" placeholder="Phone Number" id="email"/>

@@ -6,7 +6,6 @@ const ImageShare: React.FC<{
 	isLoading: boolean,
 	images: ImageModel[]
 }> = ({ isLoading, images }) => {
-	console.log({ images });
 	return (
 		<ItemLoader isLoading={ isLoading }>
 			{ images.map(image => (
