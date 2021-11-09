@@ -77,7 +77,7 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 			.catch(error => {
 				if (config.showServerProgress) {
 					dispatch(serverProgressSliceActions.showProgress({
-						type: ServerProgressType.SUCCESS,
+						type: ServerProgressType.ERROR,
 						message: error.message
 					}));
 				}

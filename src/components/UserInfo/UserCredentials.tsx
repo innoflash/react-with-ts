@@ -8,7 +8,7 @@ import { LocationModel } from '../../models/LocationModel';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
 // eslint-disable-next-line react/display-name
-const UserCredentials = forwardRef<HTMLFormElement, {
+const UserCredentials = forwardRef<HTMLButtonElement, {
 	isLoading: boolean;
 	locations: LocationModel[];
 }>((x, ref) => {
@@ -34,11 +34,11 @@ const UserCredentials = forwardRef<HTMLFormElement, {
 	// handle form submission.
 	const formSubmissionHandler = (event: React.FormEvent) => {
 		event.preventDefault();
-
+		console.log('The form is valid');
 	};
 
 	return (
-		<form onSubmit={formSubmissionHandler} ref={ref} >
+		<form onSubmit={ formSubmissionHandler }>
 			{ nameInput.hasError && <small className="text-danger">The name is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ userNameImage } className="name_f"/>
@@ -69,7 +69,7 @@ const UserCredentials = forwardRef<HTMLFormElement, {
 				<input type="text"
 				       className="form-control"
 				       placeholder="Phone Number"
-				       id="email"
+				       id="phone"
 				       value={ phoneInput.value }
 				       onChange={ phoneInput.onChange }
 				       onBlur={ phoneInput.onBlur }/>
@@ -128,7 +128,7 @@ const UserCredentials = forwardRef<HTMLFormElement, {
 					        value={ locationInput.value }
 					        onChange={ locationInput.onChange }
 					        onBlur={ locationInput.onBlur }>
-						<option value="" selected disabled>Choose location</option>
+						<option value="" disabled>Choose location</option>
 						{ provinces.map(province => (
 							<optgroup label={ province } key={ province }>
 								{ getLocations(province).map(location => (
@@ -146,6 +146,7 @@ const UserCredentials = forwardRef<HTMLFormElement, {
 					Lastly, share this cracking ice post to Facebook or <br/> Instagram and
 					enjoy your FREE NESCAFÉ ICED COFFEE!</h4>
 			</div>
+			<button ref={ ref } type="submit" style={ { display: 'none' } }/>
 		</form>
 	);
 });
