@@ -42,8 +42,14 @@ const Dialog: React.FC = () => {
 	import(`../../assets/img/dialogs/${ dialogConfig.type }-image.svg`)
 		.then(res => setDialogIcon(res.default));
 
+	//check whether or not the cancel button must show.
+	const showCancelButton = () => [DialogType.CONFIRM].includes(dialogConfig.type);
+
 	//set button class name (color).
 	const getButtonColor = () => `card-link btn btn-${ typeConfig[dialogConfig.type].btnColor } btn-xs`;
+
+	//set footer content aligning.
+	const getFooterStyles = () => `d-flex flex-row justify-content-${ showCancelButton() ? 'between' : 'center' }`;
 
 	return <Backdrop>
 		<Card>
@@ -54,10 +60,10 @@ const Dialog: React.FC = () => {
 				{ dialogConfig.title || typeConfig[dialogConfig.type].title }
 			</h6>
 			{ !!dialogConfig.message && <p className="text-center">{ dialogConfig.message }</p> }
-			<div className="d-flex flex-row justify-content-between">
-				<a href="#" className="btn btn-danger-outline btn-xs">
+			<div className={ getFooterStyles() }>
+				{ showCancelButton() && <a href="#" className="btn btn-danger-outline btn-xs">
 					{ dialogConfig.cancelButtonText || 'Close' }
-				</a>
+				</a> }
 				<a href="#" className={ getButtonColor() }>
 					{ dialogConfig.okButtonText || 'Ok!' }
 				</a>
