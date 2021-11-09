@@ -14,6 +14,7 @@ export type DialogConfigModel = {
 	message?: string;
 	title?: string;
 	okButtonText?: string;
+	cancelButtonText?: string;
 }
 
 const dialogSlice = createSlice({

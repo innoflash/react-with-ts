@@ -48,8 +48,12 @@ const Dialog: React.FC = () => {
 			</h6>
 			{ !!dialogConfig.message && <p className="text-center">{ dialogConfig.message }</p> }
 			<div className="d-flex flex-row justify-content-between">
-				<a href="#" className="card-link btn btn-success btn-xs">Another link</a>
-				<a href="#" className="card-link btn btn-primary btn-xs">{ dialogConfig.okButtonText || 'Ok!' }</a>
+				<a href="#" className="btn btn-danger-outline btn-xs">
+					{ dialogConfig.cancelButtonText || 'Close' }
+				</a>
+				<a href="#" className="card-link btn btn-primary btn-xs">
+					{ dialogConfig.okButtonText || 'Ok!' }
+				</a>
 			</div>
 		</Card>
 	</Backdrop>;
