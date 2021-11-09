@@ -7,7 +7,7 @@ import { LocationModel } from '../models/LocationModel';
 
 const UserInfo: React.FC = () => {
 	const userDetailsRef = useRef<HTMLButtonElement>(null);
-	const { isLoading, launchRequest, data } = useHttp<never[]>({
+	const { isLoading, launchRequest: fetchData, data } = useHttp<never[]>({
 		showServerProgress: true,
 		successMessage: 'Initial data loaded successfully!'
 	});
@@ -17,15 +17,23 @@ const UserInfo: React.FC = () => {
 
 	if (data) [images, locations] = data;
 
-	useEffect(() => launchRequest(['registration/images', 'registration/locations']), []);
+	useEffect(() => fetchData(['registration/images', 'registration/locations']), []);
 
 	const getMySampleHandler = () => userDetailsRef.current?.click();
 
+	const formSubmitHandler = (data: { [key: string]: string | number }) => {
+		console.log({ data });
+	};
+
 	return (
 		<div className="inner_forms">
-			<UserCredentials isLoading={ isLoading } locations={ locations } ref={ userDetailsRef }/>
-			<ImageShare isLoading={ isLoading } images={ images }/>
-			<div className="form-group bottom_buttin" onClick={getMySampleHandler}>
+			<UserCredentials isLoading={ isLoading }
+			                 locations={ locations }
+			                 ref={ userDetailsRef }
+			                 onFormSubmit={ formSubmitHandler }/>
+			<ImageShare isLoading={ isLoading }
+			            images={ images }/>
+			<div className="form-group bottom_buttin" onClick={ getMySampleHandler }>
 				<button type="submit" className="btn btn-primary">Get my sample</button>
 			</div>
 			<div className="terms_text">

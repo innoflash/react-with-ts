@@ -9,11 +9,13 @@ import { LocationModel } from '../../models/LocationModel';
 import { dialogActions } from '../../store/dialog.slice';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
-// eslint-disable-next-line react/display-name
-const UserCredentials = forwardRef<HTMLButtonElement, {
+export type UserCredentialsProps = {
 	isLoading: boolean;
 	locations: LocationModel[];
-}>((x, ref) => {
+	onFormSubmit: (data: { [key: string]: string | number }) => void;
+};
+// eslint-disable-next-line react/display-name
+const UserCredentials = forwardRef<HTMLButtonElement, UserCredentialsProps>((x, ref) => {
 	const dispatch = useDispatch();
 
 	const ages = Array(100)
@@ -33,7 +35,7 @@ const UserCredentials = forwardRef<HTMLButtonElement, {
 	const ageInput = useInput(val => !!val.trim().length);
 	const optInInput = useInput(val => ['Yes', 'No'].includes(val));
 	const communicationInput = useInput(val => ['Email', 'SMS'].includes(val));
-	const locationInput = useInput(val => ['Email', 'SMS'].includes(val));
+	const locationInput = useInput(val => x.locations.map(location => location.id).includes(parseInt(val)));
 
 	// handle form submission.
 	const formSubmissionHandler = (event: React.FormEvent) => {
@@ -57,6 +59,15 @@ const UserCredentials = forwardRef<HTMLButtonElement, {
 		}
 
 		//submit data with parent component.
+		x.onFormSubmit({
+			name: nameInput.value,
+			email: emailInput.value,
+			phone: phoneInput.value,
+			age: ageInput.value,
+			communication: communicationInput.value,
+			opt_in: optInInput.value,
+			location_id: locationInput.value,
+		});
 	};
 
 	return (
