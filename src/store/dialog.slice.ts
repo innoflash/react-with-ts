@@ -10,7 +10,7 @@ export enum DialogType {
 }
 
 export type DialogConfigModel = {
-	type: DialogType;
+	type?: DialogType;
 	message?: string;
 	title?: string;
 	okButtonText?: string;
@@ -19,16 +19,18 @@ export type DialogConfigModel = {
 	onDialogClose?: () => void;
 }
 
+export type DialogConfigConcreteModel = DialogConfigModel & {type?: DialogType};
+
 const dialogSlice = createSlice({
 	name: DIALOG_SLICE,
 	initialState: <DialogConfigModel | null>null,
 	reducers: {
 		showDialog: (state, action: { payload: DialogConfigModel }) => action.payload,
-		showSuccessDialog: (state, action: { payload: DialogConfigModel }) => ({
+		showSuccessDialog: (state, action: { payload: DialogConfigModel | {type?: DialogType}}) => ({
 			...state, ...action.payload,
 			type: DialogType.SUCCESS
 		}),
-		showErrorDialog: (state, action: { payload: DialogConfigModel }) => ({
+		showErrorDialog: (state, action: { payload: DialogConfigModel}) => ({
 			...state, ...action.payload,
 			type: DialogType.ERROR
 		}),

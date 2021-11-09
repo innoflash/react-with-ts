@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
+import { useDispatch } from 'react-redux';
 import emailImage from '../../assets/img/email.png';
 import phoneImage from '../../assets/img/phone_number.png';
 import userNameImage from '../../assets/img/username.png';
 import { getArrayUniqueValues } from '../../helper';
 import useInput from '../../hooks/useInput';
 import { LocationModel } from '../../models/LocationModel';
+import { dialogActions } from '../../store/dialog.slice';
 import ItemLoader from '../Loaders/ItemLoader/ItemLoader';
 
 // eslint-disable-next-line react/display-name
@@ -12,6 +14,8 @@ const UserCredentials = forwardRef<HTMLButtonElement, {
 	isLoading: boolean;
 	locations: LocationModel[];
 }>((x, ref) => {
+	const dispatch = useDispatch();
+
 	const ages = Array(100)
 		.fill(0)
 		.map((_, i) => i + 1)
@@ -45,7 +49,10 @@ const UserCredentials = forwardRef<HTMLButtonElement, {
 		].some(valid => !valid);
 
 		if (isFormInvalid) {
-			//todo show error dialog.
+			dispatch(dialogActions.showErrorDialog({
+				title: 'Invalid data',
+				message: 'Please fill in all required fields with valid data.'
+			}));
 			return;
 		}
 
