@@ -34,7 +34,22 @@ const UserCredentials = forwardRef<HTMLButtonElement, {
 	// handle form submission.
 	const formSubmissionHandler = (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log('The form is valid');
+		const isFormInvalid = [
+			nameInput.valid,
+			emailInput.valid,
+			phoneInput.valid,
+			ageInput.valid,
+			optInInput.valid,
+			communicationInput.valid,
+			locationInput.valid
+		].some(valid => !valid);
+
+		if (isFormInvalid) {
+			//todo show error dialog.
+			return;
+		}
+
+		//submit data with parent component.
 	};
 
 	return (
@@ -144,7 +159,8 @@ const UserCredentials = forwardRef<HTMLButtonElement, {
 			<div className="pains">
 				<h4 className="middle_title">
 					Lastly, share this cracking ice post to Facebook or <br/> Instagram and
-					enjoy your FREE NESCAFÉ ICED COFFEE!</h4>
+					enjoy your FREE NESCAFÉ ICED COFFEE!
+				</h4>
 			</div>
 			<button ref={ ref } type="submit" style={ { display: 'none' } }/>
 		</form>
