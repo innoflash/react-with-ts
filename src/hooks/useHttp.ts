@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import env from '../environments/environement.dev';
@@ -8,7 +8,7 @@ export type HttpUseModel<T> = {
 	showServerProgress?: boolean,
 	opMessage?: string,
 	successMessage?: string;
-	onError?: (error: unknown) => void,
+	onError?: (error:  AxiosError | never) => void,
 	onSuccess?: (data: T) => void
 }
 
@@ -74,7 +74,7 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 					config.onSuccess(data as T);
 				}
 			})
-			.catch(error => {
+			.catch((error: AxiosError | never) => {
 				if (config.showServerProgress) {
 					dispatch(serverProgressActions.showProgress({
 						type: ServerProgressType.ERROR,

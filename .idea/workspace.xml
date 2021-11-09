@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="219da984-f969-4260-8804-997f9acb800c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/models/ErrorResponse.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/SuccessResponseModel.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Pages/UserInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/UserInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserInfo/UserCredentials.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserInfo/UserCredentials.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UI/ServerProgress/ServerProgress.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UI/ServerProgress/ServerProgress.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useHttp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useHttp.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useInput.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +25,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -72,7 +76,7 @@
       <workItem from="1636363327499" duration="24424000" />
       <workItem from="1636438151748" duration="2520000" />
       <workItem from="1636440898781" duration="6552000" />
-      <workItem from="1636452538571" duration="13266000" />
+      <workItem from="1636452538571" duration="16542000" />
     </task>
     <servers />
   </component>

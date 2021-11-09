@@ -1,15 +1,60 @@
+import { AxiosError } from 'axios';
 import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import ImageShare from '../components/UserInfo/ImageShare';
 import UserCredentials from '../components/UserInfo/UserCredentials';
 import useHttp from '../hooks/useHttp';
+import { ErrorResponse } from '../models/ErrorResponse';
 import { ImageModel } from '../models/ImageModel';
 import { LocationModel } from '../models/LocationModel';
+import { SuccessResponseModel } from '../models/SuccessResponseModel';
+import { dialogActions } from '../store/dialog.slice';
 
 const UserInfo: React.FC = () => {
 	const userDetailsRef = useRef<HTMLButtonElement>(null);
-	const { isLoading, launchRequest: fetchData, data } = useHttp<never[]>({
+	const dispatch = useDispatch();
+
+	// handle on user registration success.
+	const onUserRegistrationSuccessHandler = (successData: SuccessResponseModel) => {
+		console.log({ successData });
+	};
+
+	//handler on user registration failure.
+	const onUserRegistrationFailureHandler = (error: AxiosError | never) => {
+		if (error.isAxiosError) {
+			const errorResponse = error.response?.data as ErrorResponse;
+			if (errorResponse.statusCode === 422 && errorResponse.message.includes('has already been taken.')) {
+				const keys = errorResponse.message.split('\n')
+					.filter(msg => msg.includes('has already been taken'))
+					.map(msg => {
+						const [_, key] = msg.split(' ');
+						return key;
+					});
+
+				return dispatch(dialogActions.showConfirmDialog({
+					title: 'Details exist!',
+					message: `We recognize the ${ keys.join(' and ') }, seems we already received your request for the sample.\n Would you like to proceed and get the sample?`,
+					onDialogOkay: () => console.log('Will go okay with this') //todo open qr code page with values.
+				}));
+			}
+
+			return dispatch(dialogActions.showErrorDialog({
+				title: 'Registration Failure!',
+				message: errorResponse.message
+			}));
+		}
+	};
+
+	const { isLoading: isDataLoading, launchRequest: fetchData, data } = useHttp<never[]>({
 		showServerProgress: true,
 		successMessage: 'Initial data loaded successfully!'
+	});
+
+	const { launchRequest: launchRegisterUserRequest } = useHttp<SuccessResponseModel>({
+		showServerProgress: true,
+		opMessage: 'Registering...',
+		onSuccess: onUserRegistrationSuccessHandler,
+		onError: onUserRegistrationFailureHandler
 	});
 
 	let locations: LocationModel[] = [];
@@ -19,19 +64,24 @@ const UserInfo: React.FC = () => {
 
 	useEffect(() => fetchData(['registration/images', 'registration/locations']), []);
 
+	// handles button click.
 	const getMySampleHandler = () => userDetailsRef.current?.click();
 
-	const formSubmitHandler = (data: { [key: string]: string | number }) => {
-		console.log({ data });
+	// send user data via http.
+	const formSubmitHandler = (userData: { [key: string]: string | number }) => {
+		launchRegisterUserRequest('registration', {
+			method: 'post',
+			data: userData
+		});
 	};
 
 	return (
 		<div className="inner_forms">
-			<UserCredentials isLoading={ isLoading }
+			<UserCredentials isLoading={ isDataLoading }
 			                 locations={ locations }
 			                 ref={ userDetailsRef }
 			                 onFormSubmit={ formSubmitHandler }/>
-			<ImageShare isLoading={ isLoading }
+			<ImageShare isLoading={ isDataLoading }
 			            images={ images }/>
 			<div className="form-group bottom_buttin" onClick={ getMySampleHandler }>
 				<button type="submit" className="btn btn-primary">Get my sample</button>
