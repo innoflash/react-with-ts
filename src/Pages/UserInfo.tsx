@@ -8,6 +8,7 @@ import { ErrorResponse } from '../models/ErrorResponse';
 import { ImageModel } from '../models/ImageModel';
 import { LocationModel } from '../models/LocationModel';
 import { SuccessResponseModel } from '../models/SuccessResponseModel';
+import { UserModel } from '../models/UserModel';
 import { dialogActions } from '../store/dialog.slice';
 
 const UserInfo: React.FC = () => {
@@ -15,8 +16,13 @@ const UserInfo: React.FC = () => {
 	const dispatch = useDispatch();
 
 	// handle on user registration success.
-	const onUserRegistrationSuccessHandler = (successData: SuccessResponseModel) => {
-		console.log({ successData });
+	const onUserRegistrationSuccessHandler = (successData: SuccessResponseModel<UserModel>) => {
+		if (successData.success) {
+			dispatch(dialogActions.showSuccessDialog({
+				message: successData.message,
+				onDialogOkay: () => console.log('Will go to the next page.')
+			}));
+		}
 	};
 
 	//handler on user registration failure.
@@ -50,7 +56,7 @@ const UserInfo: React.FC = () => {
 		successMessage: 'Initial data loaded successfully!'
 	});
 
-	const { launchRequest: launchRegisterUserRequest } = useHttp<SuccessResponseModel>({
+	const { launchRequest: launchRegisterUserRequest } = useHttp<SuccessResponseModel<UserModel>>({
 		showServerProgress: true,
 		opMessage: 'Registering...',
 		onSuccess: onUserRegistrationSuccessHandler,
