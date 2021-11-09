@@ -8,7 +8,8 @@ const Dialog: React.FC = () => {
 	//const dialogConfig = useSelector((state: RootState) => state[DIALOG_SLICE]);
 	const dialogConfig: DialogConfigModel = {
 		type: DialogType.CONFIRM,
-		message: 'This is my message here'
+		message: 'This is my message here',
+		title: 'My custom heading'
 	};
 
 	if (!dialogConfig)
@@ -46,6 +47,10 @@ const Dialog: React.FC = () => {
 				{ dialogConfig.title || typeConfig[dialogConfig.type].title }
 			</h6>
 			{ !!dialogConfig.message && <p className="text-center">{ dialogConfig.message }</p> }
+			<div className="d-flex flex-row justify-content-between">
+				<a href="#" className="card-link btn btn-success btn-xs">Another link</a>
+				<a href="#" className="card-link btn btn-primary btn-xs">{ dialogConfig.okButtonText || 'Ok!' }</a>
+			</div>
 		</Card>
 	</Backdrop>;
 };

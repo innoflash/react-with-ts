@@ -13,6 +13,7 @@ export type DialogConfigModel = {
 	type: DialogType;
 	message?: string;
 	title?: string;
+	okButtonText?: string;
 }
 
 const dialogSlice = createSlice({
