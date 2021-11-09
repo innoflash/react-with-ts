@@ -11,7 +11,7 @@ const serverProgressSlice = createSlice({
 	}
 });
 export default serverProgressSlice;
-export const serverProgressSliceActions = serverProgressSlice.actions;
+export const serverProgressActions = serverProgressSlice.actions;
 
 export enum ServerProgressType {
 	PENDING = 'pending',

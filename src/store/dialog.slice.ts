@@ -42,5 +42,5 @@ const dialogSlice = createSlice({
 	}
 });
 
-export const dialogSliceActions = dialogSlice.actions;
+export const dialogActions = dialogSlice.actions;
 export default dialogSlice;

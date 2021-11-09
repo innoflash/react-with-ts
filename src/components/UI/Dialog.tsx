@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { DialogConfigModel, DialogType } from '../../store/dialog.slice';
+import { useDispatch } from 'react-redux';
+import { dialogActions, DialogConfigModel, DialogType } from '../../store/dialog.slice';
 import Backdrop from './Backdrop/Backdrop';
 import Card from './Card';
 
 const Dialog: React.FC = () => {
+	const dispatch = useDispatch();
 	const [dialogIcon, setDialogIcon] = useState<string>('');
 	//const dialogConfig = useSelector((state: RootState) => state[DIALOG_SLICE]);
 	const dialogConfig: DialogConfigModel = {
-		type: DialogType.WARNING,
+		type: DialogType.CONFIRM,
 		message: 'This is my message here'
 	};
 
@@ -51,6 +53,8 @@ const Dialog: React.FC = () => {
 	//set footer content aligning.
 	const getFooterStyles = () => `d-flex flex-row justify-content-${ showCancelButton() ? 'between' : 'center' }`;
 
+	const closeDialog = () => dispatch(dialogActions.hideDialog());
+
 	return <Backdrop>
 		<Card>
 			<p className="text-center">
@@ -61,7 +65,7 @@ const Dialog: React.FC = () => {
 			</h6>
 			{ !!dialogConfig.message && <p className="text-center">{ dialogConfig.message }</p> }
 			<div className={ getFooterStyles() }>
-				{ showCancelButton() && <a href="#" className="btn btn-danger-outline btn-xs">
+				{ showCancelButton() && <a href="#" className="btn btn-danger-outline btn-xs" onClick={ closeDialog }>
 					{ dialogConfig.cancelButtonText || 'Close' }
 				</a> }
 				<a href="#" className={ getButtonColor() }>

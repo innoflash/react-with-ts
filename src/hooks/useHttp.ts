@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import env from '../environments/environement.dev';
-import { serverProgressSliceActions, ServerProgressType } from '../store/server-progress.slice';
+import { serverProgressActions, ServerProgressType } from '../store/server-progress.slice';
 
 export type HttpUseModel<T> = {
 	showServerProgress?: boolean,
@@ -33,7 +33,7 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 	}) => {
 		//show user in pending status.
 		if (config.showServerProgress) {
-			setTimeout(() => dispatch(serverProgressSliceActions.showProgress({
+			setTimeout(() => dispatch(serverProgressActions.showProgress({
 				type: ServerProgressType.PENDING,
 				message: config.opMessage || 'Please wait'
 			})));
@@ -63,7 +63,7 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 
 				// update user if show progress.
 				if (config.showServerProgress) {
-					dispatch(serverProgressSliceActions.showProgress({
+					dispatch(serverProgressActions.showProgress({
 						type: ServerProgressType.SUCCESS,
 						message: config.successMessage || 'Query successful!'
 					}));
@@ -76,7 +76,7 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 			})
 			.catch(error => {
 				if (config.showServerProgress) {
-					dispatch(serverProgressSliceActions.showProgress({
+					dispatch(serverProgressActions.showProgress({
 						type: ServerProgressType.ERROR,
 						message: error.message
 					}));
@@ -91,7 +91,7 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 				setIsLoading(false);
 
 				if (config.showServerProgress) {
-					setTimeout(() => dispatch(serverProgressSliceActions.hideProgress()), 2500);
+					setTimeout(() => dispatch(serverProgressActions.hideProgress()), 2500);
 				}
 			});
 	};
