@@ -40,13 +40,13 @@ const UserInfo: React.FC = () => {
 				const keys = errorResponse.message.split('\n')
 					.filter(msg => msg.includes('has already been taken'))
 					.map(msg => {
-						const [_, key] = msg.split(' ');
+						const [, key] = msg.split(' ');
 						return key;
 					});
 
 				const foundUserData = Object.entries(userFormData)
 					.filter(item => {
-						const [key, value] = item;
+						const [key] = item;
 						return keys.includes(key);
 					}).reduce((prevVal, currentVal) => {
 						const [key, value] = currentVal;
