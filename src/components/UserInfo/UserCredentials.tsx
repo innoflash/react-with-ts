@@ -65,6 +65,7 @@ const UserCredentials: React.FC<{
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
 					<select className="form-control">
+						<option value="" selected disabled>Choose location</option>
 						{ provinces.map(province => (
 							<optgroup label={ province } key={ province }>
 								{ getLocations(province).map(location => (
