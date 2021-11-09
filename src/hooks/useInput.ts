@@ -37,7 +37,7 @@ const inputReducer = (state: InputState, action: ActionType): InputState => {
 	return { ...state, ...actionsMap[action.type]() || {} };
 };
 
-const useInput = (validate: (value: string) => boolean): InputUseResult => {
+const useInput = (validateFn: (value: string) => boolean): InputUseResult => {
 	const [inputState, dispatchInputState] = useReducer(inputReducer, initialState);
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => dispatchInputState({
@@ -48,7 +48,7 @@ const useInput = (validate: (value: string) => boolean): InputUseResult => {
 	const onBlur = () => dispatchInputState({ type: reduceTypes.BLUR });
 
 	//check for input validity.
-	const isValid = validate(inputState.value);
+	const isValid = validateFn(inputState.value);
 	const hasError = !isValid && inputState.touched;
 
 	return {

@@ -21,107 +21,60 @@ const UserCredentials: React.FC<{
 
 	const getLocations = (province: string) => locations.filter(location => location.province === province);
 
-	const {
-		value: name,
-		onChange: onNameChangeHandler,
-		onBlur: onNameBlurHandler,
-		valid: isNameValid,
-		hasError: nameHasError
-	} = useInput(val => !!val.trim().length);
-
-	const {
-		value: email,
-		onChange: onEmailChangeHandler,
-		onBlur: onEmailBlurHandler,
-		valid: isEmailValid,
-		hasError: emailHasError
-	} = useInput(val => val.trim().includes('@'));
-
-	const {
-		value: phone,
-		onChange: onPhoneChangeHandler,
-		onBlur: onPhoneBlurHandler,
-		valid: isPhoneValid,
-		hasError: phoneHasError
-	} = useInput(val => val.trim().length >= 10);
-
-	const {
-		value: age,
-		onChange: onAgeChangeHandler,
-		valid: isAgeValid,
-		onBlur: onAgeBlurHandler,
-		hasError: ageHasError
-	} = useInput(val => !!val.trim().length);
-
-	const {
-		value: optIn,
-		onChange: onOptInChangeHandler,
-		valid: isOptInValid,
-		onBlur: onOptInBlurHandler,
-		hasError: optInHasError
-	} = useInput(val => ['Yes', 'No'].includes(val));
-
-	const {
-		value: communication,
-		onChange: onCommunicationChangeHandler,
-		valid: isCommunicationValid,
-		onBlur: onCommunicationBlurHandler,
-		hasError: communicationHasError
-	} = useInput(val => ['Email', 'SMS'].includes(val));
-
-	const {
-		value: location,
-		onChange: onLocationChangeHandler,
-		valid: isLocationValid,
-		onBlur: onLocationBlurHandler,
-		hasError: locationHasError
-	} = useInput(val => ['Email', 'SMS'].includes(val));
+	// configure inputs.
+	const nameInput = useInput(val => !!val.trim().length);
+	const emailInput = useInput(val => val.trim().includes('@'));
+	const phoneInput = useInput(val => val.trim().length >= 10);
+	const ageInput = useInput(val => !!val.trim().length);
+	const optInInput = useInput(val => ['Yes', 'No'].includes(val));
+	const communicationInput = useInput(val => ['Email', 'SMS'].includes(val));
+	const locationInput = useInput(val => ['Email', 'SMS'].includes(val));
 
 	return (
 		<form>
-			{ nameHasError && <small className="text-danger">The name is invalid</small> }
+			{ nameInput.hasError && <small className="text-danger">The name is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ userNameImage } className="name_f"/>
 				<input type="text"
 				       className="form-control"
 				       placeholder="Full Name"
 				       id="full_name"
-				       value={ name }
-				       onChange={ onNameChangeHandler }
-				       onBlur={ onNameBlurHandler }/>
+				       value={ nameInput.value }
+				       onChange={ nameInput.onChange }
+				       onBlur={ nameInput.onBlur }/>
 			</div>
 
-			{ emailHasError && <small className="text-danger">The email is invalid</small> }
+			{ emailInput.hasError && <small className="text-danger">The email is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ emailImage } className="emails"/>
 				<input type="email"
 				       className="form-control"
 				       placeholder="Email"
 				       id="email"
-				       value={ email }
-				       onChange={ onEmailChangeHandler }
-				       onBlur={ onEmailBlurHandler }/>
+				       value={ emailInput.value }
+				       onChange={ emailInput.onChange }
+				       onBlur={ emailInput.onBlur }/>
 			</div>
 
-			{ phoneHasError && <small className="text-danger">The phone is invalid</small> }
+			{ phoneInput.hasError && <small className="text-danger">The phone is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ phoneImage } className="phones"/>
 				<input type="text"
 				       className="form-control"
 				       placeholder="Phone Number"
 				       id="email"
-				       value={ phone }
-				       onChange={ onPhoneChangeHandler }
-				       onBlur={ onPhoneBlurHandler }/>
+				       value={ phoneInput.value }
+				       onChange={ phoneInput.onChange }
+				       onBlur={ phoneInput.onBlur }/>
 			</div>
 
-			{ ageHasError && <small className="text-danger">The age is invalid, select the right one</small> }
+			{ ageInput.hasError && <small className="text-danger">The age is invalid, select the right one</small> }
 			<div className="form-group inline_boxs">
 				<label htmlFor="sel1">Age</label>
 				<select className="form-control"
-				        value={ age }
-				        onChange={ onAgeChangeHandler }
-				        onBlur={ onAgeBlurHandler }>
+				        value={ ageInput.value }
+				        onChange={ ageInput.onChange }
+				        onBlur={ ageInput.onBlur }>
 					<option value="" disabled>Choose opt in</option>
 					{ ages.map(age => (
 						<option key={ `key_${ age }` } value={ age }>
@@ -131,41 +84,43 @@ const UserCredentials: React.FC<{
 				</select>
 			</div>
 
-			{ optInHasError && <small className="text-danger">The opt-in is invalid, select the right one</small> }
+			{ optInInput.hasError &&
+			<small className="text-danger">The opt-in is invalid, select the right one</small> }
 			<div className="form-group inline_boxs">
 				<label htmlFor="sel1">Opt in</label>
 				<select className="form-control"
-				        value={ optIn }
-				        onChange={ onOptInChangeHandler }
-				        onBlur={ onOptInBlurHandler }>
+				        value={ optInInput.value }
+				        onChange={ optInInput.onChange }
+				        onBlur={ optInInput.onBlur }>
 					<option value="" disabled>Choose opt in</option>
 					<option>Yes</option>
 					<option>No</option>
 				</select>
 			</div>
 
-			{ communicationHasError &&
-			<small className="text-danger">The preferred communication is invalid, select the right one</small> }
 			<div className="form-group">
 				<label htmlFor="sel1">Preferred Communication</label>
+				{ communicationInput.hasError &&
+				<small className="text-danger">The preferred communication is invalid, select the right one</small> }
 				<select className="form-control"
-				        value={ communication }
-				        onChange={ onCommunicationChangeHandler }
-				        onBlur={ onCommunicationBlurHandler }>
+				        value={ communicationInput.value }
+				        onChange={ communicationInput.onChange }
+				        onBlur={ communicationInput.onBlur }>
 					<option value="" disabled>Choose method</option>
 					<option>Email</option>
 					<option>SMS</option>
 				</select>
 			</div>
+
 			<ItemLoader isLoading={ isLoading }>
-				{ locationHasError &&
+				{ locationInput.hasError &&
 				<small className="text-danger">The location is invalid, select the right one</small> }
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
 					<select className="form-control"
-					        value={ location }
-					        onChange={ onLocationChangeHandler }
-					        onBlur={ onLocationBlurHandler }>
+					        value={ locationInput.value }
+					        onChange={ locationInput.onChange }
+					        onBlur={ locationInput.onBlur }>
 						<option value="" selected disabled>Choose location</option>
 						{ provinces.map(province => (
 							<optgroup label={ province } key={ province }>
