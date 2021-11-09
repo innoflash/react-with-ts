@@ -17,8 +17,7 @@ const UserCredentials: React.FC<{
 		.filter(num => num >= 18)
 		.map(num => `${ num } years`);
 
-	const provinces = locations.map(location => location.province)
-		.filter(getArrayUniqueValues);
+	const provinces = locations.map(location => location.province).filter(getArrayUniqueValues);
 
 	const getLocations = (province: string) => locations.filter(location => location.province === province);
 
@@ -68,6 +67,14 @@ const UserCredentials: React.FC<{
 		valid: isCommunicationValid,
 		onBlur: onCommunicationBlurHandler,
 		hasError: communicationHasError
+	} = useInput(val => ['Email', 'SMS'].includes(val));
+
+	const {
+		value: location,
+		onChange: onLocationChangeHandler,
+		valid: isLocationValid,
+		onBlur: onLocationBlurHandler,
+		hasError: locationHasError
 	} = useInput(val => ['Email', 'SMS'].includes(val));
 
 	return (
@@ -151,10 +158,15 @@ const UserCredentials: React.FC<{
 				</select>
 			</div>
 			<ItemLoader isLoading={ isLoading }>
+				{ locationHasError &&
+				<small className="text-danger">The location is invalid, select the right one</small> }
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
-					<select className="form-control">
-						<option defaultValue="" selected disabled>Choose location</option>
+					<select className="form-control"
+					        value={ location }
+					        onChange={ onLocationChangeHandler }
+					        onBlur={ onLocationBlurHandler }>
+						<option value="" selected disabled>Choose location</option>
 						{ provinces.map(province => (
 							<optgroup label={ province } key={ province }>
 								{ getLocations(province).map(location => (
