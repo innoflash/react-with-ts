@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Backdrop from './components/UI/Backdrop/Backdrop';
-import Card from './components/UI/Card';
 import Layout from './components/UI/Layout';
 import NotFound from './Pages/NotFound';
 import ServerResponse from './Pages/ServerResponse';

@@ -5,6 +5,6 @@
  * @param {Array<T>} self
  * @returns {boolean}
  */
-export function getArrayUniqueValues<T>(value: T, index: number, self: Array<T>) {
+export function getArrayUniqueValues<T>(value: T, index: number, self: Array<T>): boolean {
 	return self.indexOf(value) === index;
 }

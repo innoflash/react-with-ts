@@ -8,7 +8,7 @@ export type HttpUseModel<T> = {
 	showServerProgress?: boolean,
 	opMessage?: string,
 	successMessage?: string;
-	onError?: (error: any) => void,
+	onError?: (error: unknown) => void,
 	onSuccess?: (data: T) => void
 }
 

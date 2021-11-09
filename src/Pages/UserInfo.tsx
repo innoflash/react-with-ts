@@ -2,16 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import ImageShare from '../components/UserInfo/ImageShare';
 import UserCredentials from '../components/UserInfo/UserCredentials';
 import useHttp from '../hooks/useHttp';
+import { ImageModel } from '../models/ImageModel';
+import { LocationModel } from '../models/LocationModel';
 
 const UserInfo: React.FC = () => {
 	const userDetailsRef = useRef<HTMLButtonElement>(null);
-	const { isLoading, launchRequest, data } = useHttp<any[]>({
+	const { isLoading, launchRequest, data } = useHttp<never[]>({
 		showServerProgress: true,
 		successMessage: 'Initial data loaded successfully!'
 	});
 
-	let locations = [];
-	let images = [];
+	let locations: LocationModel[] = [];
+	let images: ImageModel[] = [];
 
 	if (data) [images, locations] = data;
 
