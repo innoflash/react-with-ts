@@ -1,8 +1,10 @@
 import { AxiosError } from 'axios';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import ImageShare from '../components/UserInfo/ImageShare';
 import UserCredentials from '../components/UserInfo/UserCredentials';
+import { getRouteWithQueryParams } from '../helper';
 import useHttp from '../hooks/useHttp';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ImageModel } from '../models/ImageModel';
@@ -14,13 +16,18 @@ import { dialogActions } from '../store/dialog.slice';
 const UserInfo: React.FC = () => {
 	const userDetailsRef = useRef<HTMLButtonElement>(null);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	let userFormData = {};
 
 	// handle on user registration success.
 	const onUserRegistrationSuccessHandler = (successData: SuccessResponseModel<UserModel>) => {
 		if (successData.success) {
 			dispatch(dialogActions.showSuccessDialog({
 				message: successData.message,
-				onDialogOkay: () => console.log('Will go to the next page.')
+				onDialogOkay: () => gotoServerResponse({
+					email: successData.data.email,
+					phone: successData.data.phone
+				})
 			}));
 		}
 	};
@@ -37,10 +44,19 @@ const UserInfo: React.FC = () => {
 						return key;
 					});
 
+				const foundUserData = Object.entries(userFormData)
+					.filter(item => {
+						const [key, value] = item;
+						return keys.includes(key);
+					}).reduce((prevVal, currentVal) => {
+						const [key, value] = currentVal;
+						return { ...prevVal, [key]: value };
+					}, {});
+
 				return dispatch(dialogActions.showConfirmDialog({
 					title: 'Details exist!',
 					message: `We recognize the ${ keys.join(' and ') }, seems we already received your request for the sample.\n Would you like to proceed and get the sample?`,
-					onDialogOkay: () => console.log('Will go okay with this') //todo open qr code page with values.
+					onDialogOkay: () => gotoServerResponse(foundUserData)
 				}));
 			}
 
@@ -75,11 +91,15 @@ const UserInfo: React.FC = () => {
 
 	// send user data via http.
 	const formSubmitHandler = (userData: { [key: string]: string | number }) => {
+		userFormData = userData;
 		launchRegisterUserRequest('registration', {
 			method: 'post',
 			data: userData
 		});
 	};
+
+	// navigate to server response page.
+	const gotoServerResponse = (data: { [key: string]: string | number }) => navigate(getRouteWithQueryParams('/server-response', data));
 
 	return (
 		<div className="inner_forms">
