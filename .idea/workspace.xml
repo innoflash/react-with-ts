@@ -7,7 +7,6 @@
     <list default="true" id="219da984-f969-4260-8804-997f9acb800c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/UI/Dialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UI/Dialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/dialog.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/dialog.slice.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +71,7 @@
       <workItem from="1636363327499" duration="24424000" />
       <workItem from="1636438151748" duration="2520000" />
       <workItem from="1636440898781" duration="6552000" />
-      <workItem from="1636452538571" duration="9040000" />
+      <workItem from="1636452538571" duration="9363000" />
     </task>
     <servers />
   </component>

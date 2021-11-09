@@ -7,9 +7,8 @@ const Dialog: React.FC = () => {
 	const [dialogIcon, setDialogIcon] = useState<string>('');
 	//const dialogConfig = useSelector((state: RootState) => state[DIALOG_SLICE]);
 	const dialogConfig: DialogConfigModel = {
-		type: DialogType.CONFIRM,
-		message: 'This is my message here',
-		title: 'My custom heading'
+		type: DialogType.WARNING,
+		message: 'This is my message here'
 	};
 
 	if (!dialogConfig)
@@ -17,26 +16,34 @@ const Dialog: React.FC = () => {
 
 	const typeConfig: {
 		[key: string]: {
-			title: string
+			title: string,
+			btnColor: string;
 		}
 	} = {
 		[DialogType.SUCCESS]: {
-			title: 'Success!'
+			title: 'Success!',
+			btnColor: 'success'
 		},
 		[DialogType.ERROR]: {
-			title: 'Error!'
+			title: 'Error!',
+			btnColor: 'danger'
 		},
 		[DialogType.WARNING]: {
-			title: 'Warning!'
+			title: 'Warning!',
+			btnColor: 'warning'
 		},
 		[DialogType.CONFIRM]: {
-			title: 'Are you sure?'
+			title: 'Are you sure?',
+			btnColor: 'primary'
 		}
 	};
 
 	//load image.
 	import(`../../assets/img/dialogs/${ dialogConfig.type }-image.svg`)
 		.then(res => setDialogIcon(res.default));
+
+	//set button class name (color).
+	const getButtonColor = () => `card-link btn btn-${ typeConfig[dialogConfig.type].btnColor } btn-xs`;
 
 	return <Backdrop>
 		<Card>
@@ -51,7 +58,7 @@ const Dialog: React.FC = () => {
 				<a href="#" className="btn btn-danger-outline btn-xs">
 					{ dialogConfig.cancelButtonText || 'Close' }
 				</a>
-				<a href="#" className="card-link btn btn-primary btn-xs">
+				<a href="#" className={ getButtonColor() }>
 					{ dialogConfig.okButtonText || 'Ok!' }
 				</a>
 			</div>
