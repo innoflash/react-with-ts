@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { dialogActions, DialogConfigModel, DialogType } from '../../store/dialog.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { DIALOG_SLICE, dialogActions, DialogType } from '../../store/dialog.slice';
 import Backdrop from './Backdrop/Backdrop';
 import Card from './Card';
 
 const Dialog: React.FC = () => {
 	const dispatch = useDispatch();
 	const [dialogIcon, setDialogIcon] = useState<string>('');
-	//const dialogConfig = useSelector((state: RootState) => state[DIALOG_SLICE]);
-	const dialogConfig: DialogConfigModel = {
-		type: DialogType.CONFIRM,
-		message: 'This is my message here',
-		onDialogClose: () => console.log('this is clossed'),
-		onDialogOkay: () => console.log('this is okayed'),
-	};
+	const dialogConfig = useSelector((state: RootState) => state[DIALOG_SLICE]);
 
 	if (!dialogConfig)
 		return (<span/>);
