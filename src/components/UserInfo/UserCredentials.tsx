@@ -62,6 +62,14 @@ const UserCredentials: React.FC<{
 		hasError: optInHasError
 	} = useInput(val => ['Yes', 'No'].includes(val));
 
+	const {
+		value: communication,
+		onChange: onCommunicationChangeHandler,
+		valid: isCommunicationValid,
+		onBlur: onCommunicationBlurHandler,
+		hasError: communicationHasError
+	} = useInput(val => ['Email', 'SMS'].includes(val));
+
 	return (
 		<form>
 			{ nameHasError && <small className="text-danger">The name is invalid</small> }
@@ -128,10 +136,16 @@ const UserCredentials: React.FC<{
 					<option>No</option>
 				</select>
 			</div>
+
+			{ communicationHasError &&
+			<small className="text-danger">The preferred communication is invalid, select the right one</small> }
 			<div className="form-group">
 				<label htmlFor="sel1">Preferred Communication</label>
-				<select className="form-control">
-					<option value="" selected disabled>Choose method</option>
+				<select className="form-control"
+				        value={ communication }
+				        onChange={ onCommunicationChangeHandler }
+				        onBlur={ onCommunicationBlurHandler }>
+					<option value="" disabled>Choose method</option>
 					<option>Email</option>
 					<option>SMS</option>
 				</select>
