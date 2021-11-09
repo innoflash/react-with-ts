@@ -46,6 +46,15 @@ const UserCredentials: React.FC<{
 		hasError: phoneHasError
 	} = useInput(val => val.trim().length >= 10);
 
+	const {
+		value: age,
+		onChange: onAgeChangeHandler,
+		valid: isAgeValid,
+		onBlur: onAgeBlurHandler,
+		hasError: ageHasError
+	} = useInput(val => !!val.trim().length);
+
+	console.log({ age, ageHasError, isAgeValid });
 
 	return (
 		<form>
@@ -60,6 +69,7 @@ const UserCredentials: React.FC<{
 				       onChange={ onNameChangeHandler }
 				       onBlur={ onNameBlurHandler }/>
 			</div>
+
 			{ emailHasError && <small className="text-danger">The email is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ emailImage } className="emails"/>
@@ -71,6 +81,7 @@ const UserCredentials: React.FC<{
 				       onChange={ onEmailChangeHandler }
 				       onBlur={ onEmailBlurHandler }/>
 			</div>
+
 			{ phoneHasError && <small className="text-danger">The phone is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ phoneImage } className="phones"/>
@@ -82,9 +93,15 @@ const UserCredentials: React.FC<{
 				       onChange={ onPhoneChangeHandler }
 				       onBlur={ onPhoneBlurHandler }/>
 			</div>
+
+			{ ageHasError && <small className="text-danger">The age is invalid, select the right one</small> }
 			<div className="form-group inline_boxs">
 				<label htmlFor="sel1">Age</label>
-				<select className="form-control">
+				<select className="form-control"
+				        value={ age }
+				        onChange={ onAgeChangeHandler }
+				        onBlur={ onAgeBlurHandler }>
+					<option value="" disabled>Choose opt in</option>
 					{ ages.map(age => (
 						<option key={ `key_${ age }` } value={ age }>
 							{ age }
@@ -95,7 +112,7 @@ const UserCredentials: React.FC<{
 			<div className="form-group inline_boxs">
 				<label htmlFor="sel1">Opt in</label>
 				<select className="form-control">
-					<option value="" selected disabled>Choose opt in</option>
+					<option defaultValue="" selected disabled>Choose opt in</option>
 					<option>Yes</option>
 					<option>No</option>
 				</select>
@@ -112,7 +129,7 @@ const UserCredentials: React.FC<{
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
 					<select className="form-control">
-						<option value="" selected disabled>Choose location</option>
+						<option defaultValue="" selected disabled>Choose location</option>
 						{ provinces.map(province => (
 							<optgroup label={ province } key={ province }>
 								{ getLocations(province).map(location => (

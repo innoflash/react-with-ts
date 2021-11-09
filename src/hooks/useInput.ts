@@ -11,7 +11,7 @@ export type ActionType = {
 }
 
 export type InputUseResult = InputState & {
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+	onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
 	onBlur: () => void,
 	hasError: boolean,
 	valid: boolean
@@ -40,7 +40,7 @@ const inputReducer = (state: InputState, action: ActionType): InputState => {
 const useInput = (validate: (value: string) => boolean): InputUseResult => {
 	const [inputState, dispatchInputState] = useReducer(inputReducer, initialState);
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => dispatchInputState({
+	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => dispatchInputState({
 		type: reduceTypes.VALUE_CHANGE,
 		value: event.target.value
 	});
