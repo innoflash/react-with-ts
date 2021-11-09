@@ -30,6 +30,14 @@ const UserCredentials: React.FC<{
 		hasError: nameHasError
 	} = useInput(val => !!val.trim().length);
 
+	const {
+		value: email,
+		onChange: onEmailChangeHandler,
+		onBlur: onEmailBlurHandler,
+		valid: isEmailValid,
+		hasError: emailHasError
+	} = useInput(val => val.trim().includes('@'));
+
 	return (
 		<form>
 			{ nameHasError && <small className="text-danger">The name is invalid</small> }
@@ -43,10 +51,16 @@ const UserCredentials: React.FC<{
 				       onChange={ onNameChangeHandler }
 				       onBlur={ onNameBlurHandler }/>
 			</div>
-			<small className="text-danger">The email is invalid</small>
+			{ emailHasError && <small className="text-danger">The email is invalid</small> }
 			<div className="form-group in_desg">
 				<img src={ emailImage } className="emails"/>
-				<input type="email" className="form-control" placeholder="Email" id="email"/>
+				<input type="email"
+				       className="form-control"
+				       placeholder="Email"
+				       id="email"
+				       value={ email }
+				       onChange={ onEmailChangeHandler }
+				       onBlur={ onEmailBlurHandler }/>
 			</div>
 			<small className="text-danger">The phone is invalid</small>
 			<div className="form-group in_desg">
