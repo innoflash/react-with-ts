@@ -8,7 +8,7 @@ export type HttpUseModel<T> = {
 	showServerProgress?: boolean,
 	opMessage?: string,
 	successMessage?: string;
-	onError?: (error:  AxiosError | never) => void,
+	onError?: (error: AxiosError | never) => void,
 	onSuccess?: (data: T) => void
 }
 
@@ -58,8 +58,9 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 			.then((res: AxiosResponse[]) => {
 				if (!urlIsArray) {
 					setData(res[0].data);
+				} else {
+					setData(res.map(item => item.data) as unknown as T);
 				}
-				setData(res.map(item => item.data) as unknown as T);
 
 				// update user if show progress.
 				if (config.showServerProgress) {
@@ -71,7 +72,11 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 
 				//execute user success callback.
 				if (config.onSuccess) {
-					config.onSuccess(data as T);
+					if (!urlIsArray) {
+						return config.onSuccess(res[0].data as T);
+					}
+
+					return config.onSuccess(res.map(item => item.data) as unknown as T);
 				}
 			})
 			.catch((error: AxiosError | never) => {
