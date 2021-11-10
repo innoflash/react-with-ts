@@ -1,12 +1,23 @@
 import { AxiosError } from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ItemLoader from '../components/Loaders/ItemLoader/ItemLoader';
 import useAuthGuard from '../hooks/useAuthGuard';
 import useHttp from '../hooks/useHttp';
-import { UserModel } from '../models/UserModel';
+import { LocationModel } from '../models/LocationModel';
+import { UserModel as RootUserModel } from '../models/UserModel';
 import { dialogActions } from '../store/dialog.slice';
+
+export interface CodeModel {
+	id: number;
+	code: string;
+}
+
+export interface UserModel extends RootUserModel {
+	location: LocationModel;
+	code: CodeModel;
+}
 
 const ServerResponse: React.FC = () => {
 	const identityData = useAuthGuard();
@@ -43,19 +54,24 @@ const ServerResponse: React.FC = () => {
 			<div className="col-sm-12 col-md-12 col-lg-12">
 				<div className="inner_forms">
 					<ItemLoader isLoading={ isLoading }>
-						<div className="pera_01">
-							<h4>Congratulations { userData?.name }!</h4>
-							<p>Your FREE NESCAFÉ ICED COFFEE is ready!</p>
-						</div>
-						<div className="pera_02">
-							<h4>Get your ICED COFFEE</h4>
-							<p>Use the QR code to collect your free sample. <br/> Enjoy your FREE NESCAFÉ ICED COFFEE!
-							</p>
-							<p>ou can find our vending machine in the food court <br/> in Eastgate Shopping mall.</p>
-						</div>
-						<div className="qr_codes">
-							<img src="img/Qr_code.jpeg"/>
-						</div>
+						{ !!userData && (
+							<Fragment>
+								<div className="pera_01">
+									<h4>Congratulations { userData.name }!</h4>
+									<p>Your FREE NESCAFÉ ICED COFFEE is ready!</p>
+								</div>
+								<div className="pera_02">
+									<h4>Get your ICED COFFEE</h4>
+									<p>Use the QR code to collect your free sample. <br/> Enjoy your FREE NESCAFÉ ICED
+										COFFEE!
+									</p>
+									<p>You can find our vending machine in { userData.location.name }.</p>
+								</div>
+								<div className="qr_codes">
+									<img src="img/Qr_code.jpeg"/>
+								</div>
+							</Fragment>
+						) }
 					</ItemLoader>
 				</div>
 			</div>
