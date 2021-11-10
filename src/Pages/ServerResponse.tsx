@@ -69,7 +69,7 @@ const ServerResponse: React.FC = () => {
 									<p>You can find our vending machine in { userData.location.name }.</p>
 								</div>
 								<div className="qr_codes">
-									<QRCode value={userData.code.code} level="H"/>
+									<QRCode value={ userData.code.code } level="H"/>
 								</div>
 							</Fragment>
 						) }

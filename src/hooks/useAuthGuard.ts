@@ -20,11 +20,11 @@ const useAuthGuard = (): IdentityData | void => {
 	}
 
 	const userData: IdentityData = {};
-	if (!urlSearchParams.get('email')) {
+	if (urlSearchParams.get('email')) {
 		userData.email = urlSearchParams.get('email') as string;
 	}
 
-	if (!urlSearchParams.get('phone')) {
+	if (urlSearchParams.get('phone')) {
 		userData.phone = urlSearchParams.get('phone') as string;
 	}
 
