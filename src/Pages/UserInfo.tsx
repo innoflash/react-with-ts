@@ -45,13 +45,12 @@ const UserInfo: React.FC = () => {
 					});
 
 				const foundUserData = Object.entries(userFormData)
-					.filter(item => {
-						const [key] = item;
-						return keys.includes(key);
-					}).reduce((prevVal, currentVal) => {
-						const [key, value] = currentVal;
-						return { ...prevVal, [key]: value };
-					}, {});
+					.map(item => {
+						const [key, value] = item;
+						return { key, value };
+					})
+					.filter(item => keys.includes(item.key))
+					.reduce((prevVal, currentVal) => ({ ...prevVal, [currentVal.key]: currentVal.value }), {});
 
 				return dispatch(dialogActions.showConfirmDialog({
 					title: 'Details exist!',
