@@ -51,6 +51,16 @@ const UserCredentials = forwardRef<HTMLButtonElement, UserCredentialsProps>((x, 
 		].some(valid => !valid);
 
 		if (isFormInvalid) {
+			[
+				nameInput,
+				emailInput,
+				phoneInput,
+				ageInput,
+				optInInput,
+				communicationInput,
+				locationInput
+			].forEach(input => input.markAsTouched());
+
 			dispatch(dialogActions.showErrorDialog({
 				title: 'Invalid data',
 				message: 'Please fill in all required fields with valid data.'
@@ -66,7 +76,7 @@ const UserCredentials = forwardRef<HTMLButtonElement, UserCredentialsProps>((x, 
 			age: ageInput.value,
 			communication: communicationInput.value,
 			opt_in: optInInput.value,
-			location_id: locationInput.value,
+			location_id: locationInput.value
 		});
 	};
 
@@ -125,7 +135,7 @@ const UserCredentials = forwardRef<HTMLButtonElement, UserCredentialsProps>((x, 
 			</div>
 
 			{ optInInput.hasError &&
-			<small className="text-danger">The opt-in is invalid, select the right one</small> }
+            <small className="text-danger">The opt-in is invalid, select the right one</small> }
 			<div className="form-group inline_boxs">
 				<label htmlFor="sel1">Opt in</label>
 				<select className="form-control"
@@ -141,7 +151,7 @@ const UserCredentials = forwardRef<HTMLButtonElement, UserCredentialsProps>((x, 
 			<div className="form-group">
 				<label htmlFor="sel1">Preferred Communication</label>
 				{ communicationInput.hasError &&
-				<small className="text-danger">The preferred communication is invalid, select the right one</small> }
+                <small className="text-danger">The preferred communication is invalid, select the right one</small> }
 				<select className="form-control"
 				        value={ communicationInput.value }
 				        onChange={ communicationInput.onChange }
@@ -154,7 +164,7 @@ const UserCredentials = forwardRef<HTMLButtonElement, UserCredentialsProps>((x, 
 
 			<ItemLoader isLoading={ x.isLoading }>
 				{ locationInput.hasError &&
-				<small className="text-danger">The location is invalid, select the right one</small> }
+                <small className="text-danger">The location is invalid, select the right one</small> }
 				<div className="form-group inline_boxs">
 					<label htmlFor="sel1">Location</label>
 					<select className="form-control"

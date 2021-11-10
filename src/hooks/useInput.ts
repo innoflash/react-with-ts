@@ -13,6 +13,7 @@ export type ActionType = {
 export type InputUseResult = InputState & {
 	onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void,
 	onBlur: () => void,
+	markAsTouched: () => void,
 	hasError: boolean,
 	valid: boolean
 };
@@ -29,7 +30,7 @@ const initialState: InputState = {
 
 const inputReducer = (state: InputState, action: ActionType): InputState => {
 	const actionsMap = {
-		[reduceTypes.VALUE_CHANGE]: () => ({ value: action.value}),
+		[reduceTypes.VALUE_CHANGE]: () => ({ value: action.value }),
 		[reduceTypes.BLUR]: () => ({ touched: true })
 	};
 
@@ -46,6 +47,8 @@ const useInput = (validateFn: (value: string) => boolean): InputUseResult => {
 
 	const onBlur = () => dispatchInputState({ type: reduceTypes.BLUR });
 
+	const markAsTouched = () => onBlur();
+
 	//check for input validity.
 	const isValid = validateFn(inputState.value);
 	const hasError = !isValid && inputState.touched;
@@ -55,7 +58,8 @@ const useInput = (validateFn: (value: string) => boolean): InputUseResult => {
 		valid: isValid,
 		hasError,
 		onChange,
-		onBlur
+		onBlur,
+		markAsTouched
 	};
 };
 
