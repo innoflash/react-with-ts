@@ -8,6 +8,7 @@ import useHttp from '../hooks/useHttp';
 import { LocationModel } from '../models/LocationModel';
 import { UserModel as RootUserModel } from '../models/UserModel';
 import { dialogActions } from '../store/dialog.slice';
+import QRCode from 'react-qr-code';
 
 export interface CodeModel {
 	id: number;
@@ -68,7 +69,7 @@ const ServerResponse: React.FC = () => {
 									<p>You can find our vending machine in { userData.location.name }.</p>
 								</div>
 								<div className="qr_codes">
-									<img src="img/Qr_code.jpeg"/>
+									<QRCode value={userData.code.code} level="H"/>
 								</div>
 							</Fragment>
 						) }
