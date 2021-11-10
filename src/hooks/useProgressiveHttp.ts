@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
 import { serverProgressActions, ServerProgressType } from '../store/server-progress.slice';
 import useHttp, { HttpUseHookResult, HttpUseModel as MainHttpUseModel } from './useHttp';

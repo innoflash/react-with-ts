@@ -25,7 +25,7 @@ const ServerResponse: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [userData, setUserData] = useState<UserModel>();
-	console.log({userData});
+	console.log({ userData });
 	const onFetchUserDetailsSuccessHandler = (data: UserModel) => setUserData(data);
 
 	const onFetchUserDetailsFailureHandler = (error: AxiosError | never) => {
