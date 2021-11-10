@@ -1,8 +1,42 @@
-import React from 'react';
+import { AxiosError } from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import useAuthGuard from '../hooks/useAuthGuard';
+import useHttp from '../hooks/useHttp';
+import { UserModel } from '../models/UserModel';
+import { dialogActions } from '../store/dialog.slice';
 
 const ServerResponse: React.FC = () => {
 	const identityData = useAuthGuard();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const onFetchUserDetailsSuccessHandler = (data: UserModel) => {
+		console.log({ data });
+	};
+
+	const onFetchUserDetailsFailureHandler = (error: AxiosError | never) => {
+		let message = error.message;
+		if (error.isAxiosError) {
+			message = error.response?.data.message;
+		}
+
+		return dispatch(dialogActions.showErrorDialog({
+			message,
+			okButtonText: 'Go back!',
+			onDialogOkay: () => navigate('/', { replace: true })
+		}));
+	};
+
+	const { launchRequest: fetchUserData } = useHttp<UserModel>({
+		showServerProgress: true,
+		opMessage: 'Fetching qr code...',
+		onSuccess: onFetchUserDetailsSuccessHandler,
+		onError: onFetchUserDetailsFailureHandler
+	});
+
+	useEffect(() => fetchUserData('registration/users', { params: identityData }), []);
 
 	return (
 		<div className="row">
