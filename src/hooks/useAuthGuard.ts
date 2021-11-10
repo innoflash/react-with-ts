@@ -1,9 +1,10 @@
-import { PayloadAction } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { dialogActions, DialogConfigModel } from '../store/dialog.slice';
+import { dialogActions } from '../store/dialog.slice';
 
-const useAuthGuard = (): PayloadAction<DialogConfigModel, string> | void => {
+export type IdentityData = { email?: string, phone?: string };
+
+const useAuthGuard = (): IdentityData | void => {
 	const { search } = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -11,11 +12,23 @@ const useAuthGuard = (): PayloadAction<DialogConfigModel, string> | void => {
 	const urlSearchParams = new URLSearchParams(search);
 
 	if (!urlSearchParams.get('email') && !urlSearchParams.get('phone')) {
-		return dispatch(dialogActions.showWarningDialog({
+		dispatch(dialogActions.showWarningDialog({
 			message: 'User identification not found!',
 			onDialogOkay: () => navigate('/', { replace: true })
 		}));
+		return;
 	}
+
+	const userData: IdentityData = {};
+	if (!urlSearchParams.get('email')) {
+		userData.email = urlSearchParams.get('email') as string;
+	}
+
+	if (!urlSearchParams.get('phone')) {
+		userData.phone = urlSearchParams.get('phone') as string;
+	}
+
+	return userData;
 };
 
 export default useAuthGuard;
