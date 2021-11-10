@@ -1,13 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import env from '../environments/environement.dev';
-import { serverProgressActions, ServerProgressType } from '../store/server-progress.slice';
 
 export type HttpUseModel<T> = {
-	showServerProgress?: boolean,
-	opMessage?: string,
-	successMessage?: string;
 	onError?: (error: AxiosError | never) => void,
 	onSuccess?: (data: T) => void
 }
@@ -23,20 +18,21 @@ const api = axios.create({
 	timeout: 3500
 });
 
-function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
-	const dispatch = useDispatch();
+function useHttp<T>(config?: HttpUseModel<T> & {
+	onRequestStart?: () => void,
+	onRequestSuccess?: (data: AxiosResponse[]) => void,
+	onRequestFailure?: (error: AxiosError) => void,
+	onRequestComplete?: () => void
+}): HttpUseHookResult<T> {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [data, setData] = useState<T>();
 
 	const launchRequest = (url: string | string[], axiosRequestConfig: AxiosRequestConfig = {
 		method: 'get'
 	}) => {
-		//show user in pending status.
-		if (config.showServerProgress) {
-			setTimeout(() => dispatch(serverProgressActions.showProgress({
-				type: ServerProgressType.PENDING,
-				message: config.opMessage || 'Please wait'
-			})));
+		//emit request start.
+		if (config?.onRequestStart) {
+			config.onRequestStart();
 		}
 
 		//start the loading.
@@ -62,16 +58,13 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 					setData(res.map(item => item.data) as unknown as T);
 				}
 
-				// update user if show progress.
-				if (config.showServerProgress) {
-					dispatch(serverProgressActions.showProgress({
-						type: ServerProgressType.SUCCESS,
-						message: config.successMessage || 'Query successful!'
-					}));
+				// emit request success.
+				if (config?.onRequestSuccess) {
+					config.onRequestSuccess(res);
 				}
 
 				//execute user success callback.
-				if (config.onSuccess) {
+				if (config?.onSuccess) {
 					if (!urlIsArray) {
 						return config.onSuccess(res[0].data as T);
 					}
@@ -80,23 +73,22 @@ function useHttp<T>(config: HttpUseModel<T>): HttpUseHookResult<T> {
 				}
 			})
 			.catch((error: AxiosError | never) => {
-				if (config.showServerProgress) {
-					dispatch(serverProgressActions.showProgress({
-						type: ServerProgressType.ERROR,
-						message: error.message
-					}));
+				// emit request error.
+				if (config?.onRequestFailure) {
+					config.onRequestFailure(error);
 				}
 
 				//execute custom error callback.
-				if (config.onError) {
+				if (config?.onError) {
 					config.onError(error);
 				}
 			})
 			.finally(() => {
 				setIsLoading(false);
 
-				if (config.showServerProgress) {
-					setTimeout(() => dispatch(serverProgressActions.hideProgress()), 2500);
+				// emit request complete.
+				if (config?.onRequestComplete) {
+					config.onRequestComplete();
 				}
 			});
 	};

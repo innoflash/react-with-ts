@@ -6,6 +6,7 @@ import ImageShare from '../components/UserInfo/ImageShare';
 import UserCredentials from '../components/UserInfo/UserCredentials';
 import { getRouteWithQueryParams } from '../helper';
 import useHttp from '../hooks/useHttp';
+import useProgressiveHttp from '../hooks/useProgressiveHttp';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ImageModel } from '../models/ImageModel';
 import { LocationModel } from '../models/LocationModel';
@@ -66,13 +67,11 @@ const UserInfo: React.FC = () => {
 		}
 	};
 
-	const { isLoading: isDataLoading, launchRequest: fetchData, data } = useHttp<never[]>({
-		showServerProgress: true,
+	const { isLoading: isDataLoading, launchRequest: fetchData, data } = useProgressiveHttp<never[]>({
 		successMessage: 'Initial data loaded successfully!'
 	});
 
-	const { launchRequest: launchRegisterUserRequest } = useHttp<SuccessResponseModel<UserModel>>({
-		showServerProgress: true,
+	const { launchRequest: launchRegisterUserRequest } = useProgressiveHttp<SuccessResponseModel<UserModel>>({
 		opMessage: 'Registering...',
 		onSuccess: onUserRegistrationSuccessHandler,
 		onError: onUserRegistrationFailureHandler

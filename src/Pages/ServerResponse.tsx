@@ -1,14 +1,14 @@
 import { AxiosError } from 'axios';
 import React, { Fragment, useEffect, useState } from 'react';
+import QRCode from 'react-qr-code';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ItemLoader from '../components/Loaders/ItemLoader/ItemLoader';
 import useAuthGuard from '../hooks/useAuthGuard';
-import useHttp from '../hooks/useHttp';
+import useProgressiveHttp from '../hooks/useProgressiveHttp';
 import { LocationModel } from '../models/LocationModel';
 import { UserModel as RootUserModel } from '../models/UserModel';
 import { dialogActions } from '../store/dialog.slice';
-import QRCode from 'react-qr-code';
 
 export interface CodeModel {
 	id: number;
@@ -25,7 +25,7 @@ const ServerResponse: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [userData, setUserData] = useState<UserModel>();
-
+	console.log({userData});
 	const onFetchUserDetailsSuccessHandler = (data: UserModel) => setUserData(data);
 
 	const onFetchUserDetailsFailureHandler = (error: AxiosError | never) => {
@@ -41,8 +41,7 @@ const ServerResponse: React.FC = () => {
 		}));
 	};
 
-	const { launchRequest: fetchUserData, isLoading } = useHttp<UserModel>({
-		showServerProgress: true,
+	const { launchRequest: fetchUserData, isLoading } = useProgressiveHttp<UserModel>({
 		opMessage: 'Fetching qr code...',
 		onSuccess: onFetchUserDetailsSuccessHandler,
 		onError: onFetchUserDetailsFailureHandler
